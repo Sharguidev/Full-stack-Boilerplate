@@ -1,7 +1,13 @@
 {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "workbench.editorAssociations": {   
-        "*.md": "vscode.markdown.preview.editor"
-    }
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  },
+
+  "json.schemaDownload.enable": false,
+  "json.validate.enable": true,
+  "files.associations": {
+    "**/mcp*.json": "ignoreThisFile"
+  }
 }
