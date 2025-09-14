@@ -7,14 +7,14 @@ services:
     name: flask-rest-hello
     env: python # valid values: https://render.com/docs/yaml-spec#environment
     buildCommand: "./render_build.sh"
-    startCommand: "gunicorn wsgi --chdir ./src/"
+    startCommand: "gunicorn wsgi --chdir ./backend/"
     plan: free # optional; defaults to starter
     numInstances: 1
     envVars:
       - key: BASENAME
         value: /
       - key: FLASK_APP
-        value: src/app.py
+        value: backend/app.py
       - key: DEBUG
         value: TRUE
       - key: PYTHON_VERSION
