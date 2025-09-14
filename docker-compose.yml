@@ -1,0 +1,147 @@
+# docker-compose.yml (Root level - Full stack development)
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: fullstack_db
+    environment:
+      POSTGRES_DB: example
+      POSTGRES_USER: gitpod
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - fullstack_network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-fullstack_db}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Backend (Flask API - using your existing devcontainer Dockerfile)
+  backend:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    container_name: fullstack_backend
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-fullstack_db}
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - FLASK_APP=${FLASK_APP:-app.py}
+      - FLASK_DEBUG=${FLASK_DEBUG:-1}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:4321,http://127.0.0.1:4321}
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mount the entire workspace (matching your devcontainer setup)
+      - .:/workspaces/${WORKSPACE_FOLDER:-fullstack-boilerplate}
+      - /workspaces/${WORKSPACE_FOLDER:-fullstack-boilerplate}/.venv # Exclude venv from sync
+    working_dir: /workspaces/${WORKSPACE_FOLDER:-fullstack-boilerplate}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+    command: >
+      bash -c "
+        echo '🚀 Starting Flask backend...' &&
+        echo 'Waiting for database to be ready...' &&
+        while ! pg_isready -h db -p 5432 -U ${DB_USER:-postgres}; do
+          echo 'Database not ready yet, waiting...'
+          sleep 2
+        done &&
+        echo '✅ Database is ready!' &&
+        echo '📦 Installing/updating Python dependencies...' &&
+        pipenv install --dev &&
+        echo '🔄 Running database migrations...' &&
+        pipenv run flask db upgrade 2>/dev/null || echo 'No migrations to run yet' &&
+        echo '🌟 Starting Flask development server...' &&
+        pipenv run flask run --host=0.0.0.0 --port=5000 --debug
+      "
+
+  # Frontend (Astro + React + Tailwind CSS)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fullstack_frontend
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:5000}
+      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:5000/api}
+      - PUBLIC_API_URL=${PUBLIC_API_URL:-http://localhost:5000}
+      - ASTRO_HOST=0.0.0.0
+      - ASTRO_PORT=4321
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Prevent node_modules from being overwritten
+      - /app/dist # Prevent dist from being overwritten
+      - /app/.astro # Prevent Astro cache from being overwritten
+    depends_on:
+      - backend
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo '🚀 Starting Astro frontend...' &&
+        echo '📦 Installing/updating dependencies...' &&
+        pnpm install &&
+        echo '🌟 Starting Astro development server...' &&
+        pnpm run dev --host 0.0.0.0 --port 4321
+      "
+
+  # Redis (Optional - for caching, sessions, etc.)
+  redis:
+    image: redis:7-alpine
+    container_name: fullstack_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Mailhog (Optional - for email testing in development)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: fullstack_mailhog
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web interface
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+
+# Volumes for persistent data
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# Networks
+networks:
+  fullstack_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
