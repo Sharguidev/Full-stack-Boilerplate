@@ -18,20 +18,21 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
   frontend:
-    build: 
-      context: ./frontend
+    build:
+      context: ../frontend
       dockerfile: Dockerfile
     ports:
       - "4321:4321"
     volumes:
-      - ./frontend:/app
+      - ../frontend:/app
       - /app/node_modules
       - /app/dist
+    command: pnpm run dev --host 0.0.0.0
     depends_on:
       - db
     networks:
       - default
-      
+
   db:
     image: postgres:latest
     restart: unless-stopped

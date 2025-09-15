@@ -21,8 +21,8 @@ RUN pip install pipenv
 
 #add node for frontend
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g pnpm
+    && sudo apt-get install -y nodejs \
+    && sudo npm install -g pnpm
 
 #  Use the same path as `workspaceFolder` in `devcontainer.json`
 WORKDIR /workspaces/${localWorkspaceFolderBasename}

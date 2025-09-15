@@ -1,11 +1,12 @@
 # frontend/Dockerfile
 FROM node:18-alpine
 
-# Install pnpm globally
-RUN npm install -g pnpm
 
 # Set working directory
 WORKDIR /app
+
+# Install pnpm globally
+RUN npm install -g pnpm
 
 # Copy package files
 COPY package.json pnpm-lock.yaml* ./

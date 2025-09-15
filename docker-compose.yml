@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: gitpod
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5431:5431"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -34,17 +34,8 @@ services:
       context: .
       dockerfile: .devcontainer/Dockerfile
     container_name: fullstack_backend
-    environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONDONTWRITEBYTECODE=1
-      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-fullstack_db}
-      - FLASK_ENV=${FLASK_ENV:-development}
-      - FLASK_APP=${FLASK_APP:-app.py}
-      - FLASK_DEBUG=${FLASK_DEBUG:-1}
-      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
-      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:4321,http://127.0.0.1:4321}
     ports:
-      - "5000:5000"
+      - "3001:3001"
     volumes:
       # Mount the entire workspace (matching your devcontainer setup)
       - .:/workspaces/${WORKSPACE_FOLDER:-fullstack-boilerplate}
@@ -79,13 +70,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: fullstack_frontend
-    environment:
-      - NODE_ENV=${NODE_ENV:-development}
-      - VITE_API_URL=${VITE_API_URL:-http://localhost:5000}
-      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:5000/api}
-      - PUBLIC_API_URL=${PUBLIC_API_URL:-http://localhost:5000}
-      - ASTRO_HOST=0.0.0.0
-      - ASTRO_PORT=4321
     ports:
       - "4321:4321"
     volumes:
@@ -144,4 +128,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.21.0.0/16
