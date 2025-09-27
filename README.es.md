@@ -1,76 +1,226 @@
-<a href="https://www.breatheco.de"><img height="280" align="right" src="https://github.com/4GeeksAcademy/flask-rest-hello/blob/main/docs/assets/badge.png?raw=true"></a>
+# Full-Stack Boilerplate
 
-# Plantilla de Flask para Desarrolladores Junior
+🚀 Frontend Astro + React | Backend Flask API + PostgreSQL
+Un boilerplate full-stack moderno y listo para producción para construir aplicaciones web escalables. Incluye Astro + React para un rendimiento frontend ultrarrápido y Flask API + PostgreSQL + SQLAlchemy para una arquitectura backend robusta.
+📹 Ver el Tutorial en Video | 📚 Documentación Extensa
+✨ Características
+Frontend (Astro + React)
 
-Crea API's con Flask en minutos, [📹 mira el tutorial en video](https://youtu.be/ORxQ-K3BzQA).
+⚡ Framework Astro - Cero JS por defecto, rendimiento ultrarrápido
+⚛️ Integración React - Componentes interactivos donde se necesiten
+🎨 UI Moderna - Diseño limpio y responsivo
+📱 Mobile-First - Optimizado para todos los dispositivos
+🔥 Hot Reload - Experiencia de desarrollo rápida
 
-- [Documentación extensa aquí](https://start.4geeksacademy.com).
-- Integrado con Pipenv para la gestión de paquetes.
-- Despliegue rápido a render.com o heroku con `$ pipenv run deploy`.
-- Uso de archivo `.env`.
-- Integración de SQLAlchemy para la abstracción de bases de datos.
+Backend (Flask API)
 
-## 1) Instalación
+🐍 Python Flask - Framework web ligero y flexible
+🗄️ PostgreSQL - Base de datos relacional robusta
+🔧 SQLAlchemy ORM - Capa de abstracción de base de datos
+📦 Pipenv - Gestión de dependencias
+🔐 Autenticación Lista - Integración JWT preparada
+📊 Panel de Admin - Gestión de datos integrada
+🚀 Despliegue Rápido - Deploy con un comando a Render/Heroku
 
-Esta plantilla se instala en unos segundos si la abres gratis con Codespaces (recomendado) o Gitpod.
-Omite estos pasos de instalación y salta al paso 2 si decides usar cualquiera de esos servicios.
+📋 Prerequisitos
 
-> Importante: La plantilla está hecha para python 3.10 pero puedes cambiar la `python_version` en el Pipfile.
+Python 3.10+ (configurable en Pipfile)
+Node.js 18+ y npm/yarn
+PostgreSQL 13+
+Pipenv (pip install pipenv)
 
-Los siguientes pasos se ejecutan automáticamente dentro de gitpod, si estás haciendo una instalación local debes hacerlos manualmente:
+🚀 Inicio Rápido
+Opción 1: Desarrollo en la Nube (Recomendado)
+Usando GitHub Codespaces o Gitpod - ¡Todo está preconfigurado!
 
-```sh
-pipenv install;
-psql -U root -c 'CREATE DATABASE example;'
-pipenv run init;
-pipenv run migrate;
-pipenv run upgrade;
-```
+Haz clic en "Use this template" o haz fork del repositorio
+Ábrelo en Codespaces/Gitpod
+Espera a que termine la configuración automática
+¡Comienza a programar! 🎉
 
-> Nota: Los usuarios de Codespaces pueden conectarse a psql escribiendo: `psql -h localhost -U gitpod example`
+## Opción 2: Instalación Local
 
-## 2) Cómo empezar a codificar
-
-Hay una API de ejemplo funcionando con una base de datos de ejemplo. Todo tu código de aplicación debe escribirse dentro de la carpeta `./src/`.
-
-- src/main.py (aquí es donde debes codificar tus endpoints)
-- src/models.py (tus tablas de base de datos y lógica de serialización)
-- src/utils.py (algunas clases y funciones reutilizables)
-- src/admin.py (agrega tus modelos al administrador y gestiona tus datos fácilmente)
-
-Para una explicación más detallada, busca el tutorial dentro de la carpeta `docs`.
-
-## Recuerda migrar cada vez que cambies tus modelos
-
-Debes migrar y actualizar las migraciones por cada actualización que hagas a tus modelos:
+### Clonar el repositorio
 
 ```bash
-$ pipenv run migrate # (para hacer las migraciones)
-$ pipenv run upgrade  # (para actualizar tu base de datos con las migraciones)
+    git clone https://github.com/Sharguidev/Full-stack-Boilerplate.git
+    cd Full-stack-Boilerplate
 ```
 
-## Generar un diagrama de la base de datos
-
-Si deseas visualizar la estructura de tu base de datos en forma de diagrama, puedes generarlo con el siguiente comando:
+### Configuracion del backend
 
 ```bash
-$ pipenv run diagram
+# Instalar dependencias de Python
+   pipenv install
+
+   # Crear base de datos
+   psql -U root -c 'CREATE DATABASE example;'
+
+   # Inicializar y migrar base de datos
+   pipenv run init
+   pipenv run migrate
+   pipenv run upgrade
 ```
 
-Este comando generará un archivo con el diagrama de la base de datos basado en los modelos definidos en `src/models.py`.
+### Configuración del frontend
 
-## Verifica tu API en vivo
+```bash
+   cd frontend
+   #si no existe la carpeta node_modules ejecuta el siguiente comando:
+   pnpm install
+```
 
-1. Una vez que ejecutes el comando `pipenv run start` tu API comenzará a ejecutarse en vivo y podrás abrirla haciendo clic en la pestaña "ports" y luego haciendo clic en "open browser".
+### Configuración del Entorno
 
-> ✋ Si estás trabajando en una nube de codificación como [Codespaces](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#sharing-a-port) o [Gitpod](https://www.gitpod.io/docs/configure/workspaces/ports#configure-port-visibility) asegúrate de que tu puerto reenviado sea público.
+```bash
+   cp .env.example .env
+```
 
-## Publica/Despliega tu sitio web!
+Posterior a crear el nuevo archivo debes de actualizar tu variables, de la base de datos, si utilizas docker esto no es necesario.
 
-Esta plantilla está 100% lista para desplegarse con Render.com y Heroku en cuestión de minutos. Por favor lee la [documentación oficial al respecto](https://start.4geeksacademy.com/deploy).
+### Iniciar el proyecto
 
-### Contribuidores
+```bash
+   pipenv run start
 
-Esta plantilla fue construida como parte del [Bootcamp de Codificación](https://4geeksacademy.com/us/coding-bootcamp) de 4Geeks Academy por [Alejandro Sanchez](https://twitter.com/alesanchezr) y muchos otros contribuidores. Descubre más sobre nuestro [Curso de Desarrollador Full Stack](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), y [Bootcamp de Ciencia de Datos](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+   #En otra terminal.
+   cd frontend && pnpm run dev
+```
 
-Puedes encontrar otras plantillas y recursos como este en la [página de github de la escuela](https://github.com/4geeksacademy/).
+### 📁 Estructura del Proyecto
+
+```bash
+Full-stack-Boilerplate/
+├── src/                      # Aplicación Flask backend
+│   ├── app.py              # 🔗 Endpoints y rutas de la API
+│   ├── models.py            # 🗄️ Modelos de BD y serialización
+│   ├── utils.py             # 🛠️ Funciones y clases reutilizables
+│   └── admin.py            # ⚙️ Configuración panel de admin
+│   └── wsgi.py             # 🌐 Configuración del deployment
+├── frontend/                 # Frontend Astro + React
+│   ├── src/
+│   │   ├── components/      # Componentes React
+│   │   ├── pages/          # Páginas Astro
+│   │   └── layouts/        # Layouts de página
+│   ├── public/             # Assets estáticos
+│   └── package.json
+├── migrations/              # Migraciones de base de datos
+├── docs/                   # 📚 Documentación
+├── Pipfile                 # Dependencias Python
+├── .env.example            # Template de entorno
+└── README.md
+
+```
+
+## 🗄️ Gestión de Base de Datos
+
+### Crear y Aplicar Migraciones
+
+#### Después de hacer cambios en tus modelos en src/models.py:
+
+```bash
+   pipenv run migrate
+   pipenv run upgrade
+```
+
+#### Genera el diagrama de la base de datos
+
+```bash
+   pipenv run diagram
+```
+
+## 🛠️ Scripts Disponibles
+
+### Backend
+
+```bash
+pipenv run start       # Iniciar servidor de desarrollo
+pipenv run migrate     # Generar migraciones de BD
+pipenv run upgrade     # Aplicar migraciones
+pipenv run init        # Inicializar base de datos
+pipenv run deploy      # Desplegar a producción (Render/Heroku)
+pipenv run diagram     # Generar diagrama de BD
+
+```
+
+### Frontend
+
+```bash
+   pnpm run dev           # Iniciar servidor de desarrollo
+   pnpm run build         # Construir para producción
+   pnpm run preview       # Vista previa del build de producción
+   pnpm run astro         # Ejecutar comandos CLI de Astro
+```
+
+## 🚀 Pasos de Despliegue Manual
+
+### Render.com
+
+Conecta tu repositorio GitHub
+Comando de build: pipenv install
+Comando de inicio: pipenv run start
+Agregar variables de entorno
+
+### Heroku
+
+- Crear app Heroku: `heroku create nombre-de-tu-app`
+- Agregar addon PostgreSQL: `heroku addons:create heroku-postgresql`
+- Desplegar: `git push heroku main`
+
+## 🔧 Configuración Desarrollo en la Nube
+
+### Reenvío de Puertos
+
+- Importante: Al usar Codespaces o Gitpod, asegúrate de que tu puerto reenviado esté configurado como público.
+
+- Abre la pestaña "Ports"
+- Haz clic en "Open Browser" junto a tu puerto
+- Configura la visibilidad del puerto como "Public" si es necesario
+
+## 🛡️ Mejores Prácticas de Seguridad
+
+- Usa variables de entorno para datos sensibles
+- Implementa autenticación/autorización apropiada
+- Valida todas las entradas de usuario
+- Usa HTTPS en producción
+- Mantén las dependencias actualizadas
+
+## 🤝 Contribuir
+
+- Haz fork del repositorio
+- Crea una rama de funcionalidad: `git checkout -b feature/funcionalidad-increible`
+- Confirma los cambios: `git commit -m 'Agregar funcionalidad increíble'`
+- Push a la rama: `git push origin feature/funcionalidad-increible`
+- Abre un Pull Request
+
+## 📚 Recursos de Aprendizaje
+
+- 📹 Tutorial en Video
+- 📖 Documentación Completa
+- 🎓 Bootcamp 4Geeks Academy
+
+🛠️ Construido Con Frontend
+
+Astro - Generador de Sitios Estáticos
+React - Componentes UI
+TypeScript - Tipado Seguro (opcional)
+
+Backend
+
+Flask - Framework Web Python
+SQLAlchemy - ORM Base de Datos
+PostgreSQL - Base de Datos
+Pipenv - Gestión de Dependencias
+
+DevOps
+
+Render.com - Plataforma de Despliegue
+Heroku - Despliegue Alternativo
+GitHub Codespaces - Desarrollo en la Nube
+
+📄 Licencia
+Este proyecto está licenciado bajo la Licencia MIT.
+🙏 Créditos
+Creado por [Alejandro Sanchez](https://github.com/alejandro86p), [Guillermo Obando](https://github.com/Sharguidev) y colaboradores de [4Geeks Academy](https://github.com/4GeeksAcademy).
+⭐ Apoyo
+Si este boilerplate te ayuda a construir aplicaciones increíbles, ¡dale una ⭐ en GitHub!
