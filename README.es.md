@@ -2,7 +2,7 @@
 
 🚀 Frontend Astro + React | Backend Flask API + PostgreSQL
 Un boilerplate full-stack moderno y listo para producción para construir aplicaciones web escalables. Incluye Astro + React para un rendimiento frontend ultrarrápido y Flask API + PostgreSQL + SQLAlchemy para una arquitectura backend robusta.
-📹 Ver el Tutorial en Video | 📚 Documentación Extensa
+📚 Documentación Extensa
 ✨ Características
 Frontend (Astro + React)
 
@@ -40,11 +40,11 @@ Espera a que termine la configuración automática
 
 ## Opción 2: Instalación Local
 
-### Clonar el repositorio
+### Clonar el repositorio, debes crear una copia o usar este template para crear tu propio proyecto
 
 ```bash
-    git clone https://github.com/Sharguidev/Full-stack-Boilerplate.git
-    cd Full-stack-Boilerplate
+    git clone https://github.com/tu-usuario/tu-proyecto.git
+    cd tu-proyecto
 ```
 
 ### Configuracion del backend
@@ -116,7 +116,7 @@ Full-stack-Boilerplate/
 
 ### Crear y Aplicar Migraciones
 
-#### Después de hacer cambios en tus modelos en src/models.py:
+Después de hacer cambios en tus modelos en src/models.py:
 
 ```bash
    pipenv run migrate
@@ -167,6 +167,26 @@ Agregar variables de entorno
 - Agregar addon PostgreSQL: `heroku addons:create heroku-postgresql`
 - Desplegar: `git push heroku main`
 
+## Netlify
+
+```bash
+cd frontend
+pnpm astro add netlify
+```
+
+### Despliegue mediante la interfaz web
+
+Si tu proyecto está almacenado en GitHub, GitLab, BitBucket o Azure DevOps, puedes usar la interfaz web de Netlify para desplegar tu sitio Astro.
+
+- Haz clic en "Add a new site" (Añadir nuevo sitio) en tu panel de control de Netlify
+- Selecciona "Import an existing project" (Importar un proyecto existente)
+- Al importar tu repositorio de Astro desde tu proveedor de Git, Netlify debería detectar automáticamente y completar la configuración correcta por ti
+- Asegúrate de que se ingresen las siguientes configuraciones y luego presiona el botón "Deploy" (Desplegar):
+- Comando de construcción: astro build o pnpm run build
+- Directorio de publicación: frontend/dist
+- Después del despliegue, serás redirigido a la página de resumen del sitio. Allí podrás editar los detalles de tu sitio
+- Cualquier cambio futuro en tu repositorio fuente activará despliegues de vista previa y producción según tu configuración de despliegue.
+
 ## 🔧 Configuración Desarrollo en la Nube
 
 ### Reenvío de Puertos
@@ -187,7 +207,13 @@ Agregar variables de entorno
 
 ## 🤝 Contribuir
 
-- Haz fork del repositorio
+- Ingresa al repositorio o crea una copia en local
+
+```bash
+    git clone https://github.com/Sharguidev/Full-stack-Boilerplate.git
+    cd Full-stack-Boilerplate
+```
+
 - Crea una rama de funcionalidad: `git checkout -b feature/funcionalidad-increible`
 - Confirma los cambios: `git commit -m 'Agregar funcionalidad increíble'`
 - Push a la rama: `git push origin feature/funcionalidad-increible`
@@ -195,17 +221,16 @@ Agregar variables de entorno
 
 ## 📚 Recursos de Aprendizaje
 
-- 📹 Tutorial en Video
 - 📖 Documentación Completa
 - 🎓 Bootcamp 4Geeks Academy
 
-🛠️ Construido Con Frontend
+🛠️ Construido Con Frontend-Sharguidev
 
 Astro - Generador de Sitios Estáticos
 React - Componentes UI
 TypeScript - Tipado Seguro (opcional)
 
-Backend
+Backend-4geeksAcademy
 
 Flask - Framework Web Python
 SQLAlchemy - ORM Base de Datos
