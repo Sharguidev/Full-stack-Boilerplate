@@ -45,6 +45,98 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@app.route('/contact', methods=['POST'])
+def create_contact():
+    body = request.get_json()
+    contact = body.get('contact')
+
+    # if contact is None:
+    #     raise APIException("You need to specify the request body as json object", status_code=400)
+    
+    required_fields = ['name', 'last_name', 'email', 'address', 'phone', 'is_active']
+    if not all (contact.get(field) for field in required_fields):
+        return jsonify({"msg": "Missing required fields" + str(required_fields)}), 400
+
+    if User.query.filter_by(phone=contact['phone']).first():
+        return jsonify({"msg": "Phone is taken"}), 400
+
+    if User.query.filter_by(email=contact['email']).first():
+        return jsonify({"msg": "Email is taken"}), 400
+
+    new_contact = User(
+        name=contact['name'],
+        last_name=contact['last_name'],
+        email=contact['email'],
+        address=contact['address'],
+        phone=contact['phone'],
+        is_active=contact['is_active']
+    )
+
+    db.session.add(new_contact)
+    db.session.commit()
+
+    return jsonify(new_contact.serialize()), 201
+
+
+@app.route('/contact', methods=['GET'])
+def get_contacts():
+    contacts = User.query.all()
+    return jsonify([contact.serialize() for contact in contacts]), 200
+
+#Get contact by email, name or phone number
+
+@app.route('/search', methods=['GET'])
+def get_contact():
+
+    search_term = request.args.get('q')
+
+    if not search_term:
+        return jsonify({"msg": "Please provide a name or an email or a phone number"}), 400
+
+    contacts = User.query.filter(
+        (User.name.ilike(f'%{search_term}%')) |
+        (User.email.ilike(f'%{search_term}%')) |
+        (User.phone.ilike(f'%{search_term}%'))
+    ).all()
+    
+    if not contacts:
+        return jsonify({"msg": "Contact not found"}), 404
+    
+    return jsonify([contact.serialize() for contact in contacts]), 200
+
+@app.route('/contact/<int:id>', methods=['PUT'])
+def update_contact(id):
+    body = request.get_json()
+    contact = User.query.get(id)
+
+    if not contact:
+        return jsonify({"msg": "Contact Not Found"}), 404
+
+    if not body:
+        return jsonify({"msg": "No Data Entry"}), 404
+
+    contact.name = body.get('name', contact.name)
+    contact.last_name = body.get('last_name', contact.last_name)
+    contact.email = body.get('email', contact.email)
+    contact.address = body.get('address', contact.address)
+    contact.phone = body.get('phone', contact.phone)
+    contact.is_active = body.get('phone', contact.is_active)
+
+    db.session.commit()
+    return jsonify(contact.serialize()), 200
+
+@app.route('/contact/<int:id>', methods=['DELETE'])
+def delete_contact(id):
+    contact = User.query.get(id)
+
+    if not contact:
+        return jsonify({"msg": "No contact found"}), 404
+        
+    db.session.delete(contact)
+    db.session.commit()
+    return jsonify({"msg": "User deleted successfully"}), 200
+    
+
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
