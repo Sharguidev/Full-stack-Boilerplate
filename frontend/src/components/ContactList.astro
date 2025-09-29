@@ -1,0 +1,93 @@
+---
+import "../styles/global.css"
+import CardContact from "./CardContact.astro"
+---
+
+<div class="container">
+    <h1>Contact List</h1>
+    <p>Example to use the template</p>
+    <div class="contact-controls">
+        <div class="search-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="search" name="" id="" class="search-input" placeholder="Search by name, email or phone">
+        </div>
+        <button class="btn-add">Add Contact</button>
+    </div>
+    <div class="card-container ">
+        <CardContact />
+    </div>
+</div>
+<script src="https://kit.fontawesome.com/509c179d58.js" crossorigin="anonymous"></script>
+<style>
+   
+    .container{
+       width: 80%;
+       left: 50%;
+       top: 30%;
+       transform: translate(-50%, -50%);
+       position: absolute;
+       padding: 2rem;
+       border: 1px solid #a1a0a0;
+       border-radius: 10px;
+    }
+    
+    h1 {
+        margin-bottom: 1rem;
+    }
+    
+    .contact-controls {
+        display: flex;
+        width: 80%;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+        
+    }
+    .search-wrapper {
+        position: relative;
+        width: 80%;
+    }
+    
+    .search-input {
+        padding: 0.5rem;
+        width: 90%;
+        border: none;
+        border-bottom: 2px solid #000000;
+        border-radius: 1px;
+        font-size: 1.1rem;
+        
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 92%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .btn-add {
+        background-color: black;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        width: 15%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-add:hover {
+        background-color: #344e41;
+    }
+    .search-input:focus {
+        outline: none;
+    }
+
+    .card-container {
+        margin-top: 2%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
