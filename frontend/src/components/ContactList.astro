@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css"
 import CardContact from "./CardContact.astro"
+import App from "./modals/CreateModal.tsx"
 ---
 
 <div class="container">
@@ -11,7 +12,7 @@ import CardContact from "./CardContact.astro"
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
             <input type="search" name="" id="" class="search-input" placeholder="Search by name, email or phone">
         </div>
-        <button class="btn-add">Add Contact</button>
+        <App client:load />
     </div>
     <div class="card-container ">
         <CardContact />
@@ -29,6 +30,7 @@ import CardContact from "./CardContact.astro"
        padding: 2rem;
        border: 1px solid #a1a0a0;
        border-radius: 10px;
+       z-index: 1;
     }
     
     h1 {
@@ -50,34 +52,21 @@ import CardContact from "./CardContact.astro"
     
     .search-input {
         padding: 0.5rem;
-        width: 90%;
+        width: 73%;
         border: none;
         border-bottom: 2px solid #000000;
         border-radius: 1px;
         font-size: 1.1rem;
-        
+        margin-left: 25%;
     }
 
     .search-icon {
         position: absolute;
-        left: 92%;
+        left: 93%;
         top: 50%;
         transform: translateY(-50%);
     }
-    .btn-add {
-        background-color: black;
-        color: white;
-        font-size: 1.1rem;
-        font-weight: 600;
-        width: 15%;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .btn-add:hover {
-        background-color: #344e41;
-    }
+    
     .search-input:focus {
         outline: none;
     }
