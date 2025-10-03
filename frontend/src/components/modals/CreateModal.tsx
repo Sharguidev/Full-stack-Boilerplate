@@ -60,6 +60,7 @@ const App: React.FC = () => {
           draggable: true,
           theme: "light",
         });
+        window.location.reload();
         return data;
       } else {
         toast.error("Houston, we have a problem 🚨");
@@ -74,13 +75,18 @@ const App: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const inputStyle = () => ({
+    padding: "2px",
+    fontSize: "1.1rem",
+  });
+
   return (
     <>
       <Button
         color="cyan"
-        variant="filled"
+        variant="solid"
         onClick={showModal}
-        style={{ fontSize: "1.1rem" }}
+        style={{ fontSize: "1.1rem", padding: "20px", fontWeight: "600" }}
       >
         Add Contact
       </Button>
@@ -108,6 +114,7 @@ const App: React.FC = () => {
           placeholder="Name"
           value={user.name}
           onChange={(e) => setUser({ ...user, name: e.target.value })}
+          style={inputStyle()}
         />
         <br />
         <br />
@@ -115,6 +122,7 @@ const App: React.FC = () => {
           placeholder="Last Name"
           value={user.last_name}
           onChange={(e) => setUser({ ...user, last_name: e.target.value })}
+          style={inputStyle()}
         />
         <br />
         <br />
@@ -122,6 +130,7 @@ const App: React.FC = () => {
           placeholder="Email"
           value={user.email}
           onChange={(e) => setUser({ ...user, email: e.target.value })}
+          style={inputStyle()}
         />
         <br />
         <br />
@@ -129,13 +138,25 @@ const App: React.FC = () => {
           placeholder="Address"
           value={user.address}
           onChange={(e) => setUser({ ...user, address: e.target.value })}
+          style={inputStyle()}
         />
         <br />
         <br />
         <Input
           placeholder="Phone"
+          type="tel"
+          pattern="[0-9]*"
+          inputMode="numeric"
           value={user.phone}
-          onChange={(e) => setUser({ ...user, phone: e.target.value })}
+          onChange={(e) => {
+            if (e.target.validity.valid) {
+              setUser({ ...user, phone: e.target.value });
+            } else {
+              toast.error("Please put numbers in the phone field");
+            }
+          }}
+          style={inputStyle()}
+          required
         />
       </Modal>
       <ToastContainer />

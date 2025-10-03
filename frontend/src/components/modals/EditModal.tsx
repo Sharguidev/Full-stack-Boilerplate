@@ -25,7 +25,12 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Button color="danger" variant="outlined" onClick={showModal}>
+      <Button
+        color="danger"
+        variant="outlined"
+        onClick={showModal}
+        style={{ fontSize: "1.1rem", padding: "20px" }}
+      >
         <i className="fa-solid fa-pen"></i>
       </Button>
       <Modal

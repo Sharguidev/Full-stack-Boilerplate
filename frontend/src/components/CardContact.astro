@@ -14,9 +14,6 @@ interface Contact {
 
 const response = await fetch("http://localhost:3000/contact");
 const contacts : Contact[] = await response.json();
-
-
-
 ---
 
 <div class="card-container">
@@ -36,10 +33,22 @@ const contacts : Contact[] = await response.json();
             />
           </div>
           <div class="body">
-            <p class="card-text">{contact.name} {contact.last_name || ''}</p>
-            <p class="card-text">{contact.email || 'No email'}</p>
-            <p class="card-text">{contact.phone || 'No phone'}</p>
-            <p class="card-text">{contact.address || 'No address'}</p>
+            <div class="contact-row">
+              <i class="fa-solid fa-user"></i>
+              <p class="card-text">{contact.name} {contact.last_name || ''}</p>
+            </div>
+            <div class="contact-row">
+              <i class="fa-solid fa-envelope"></i>
+              <p class="card-text">{contact.email || 'No email'}</p>
+            </div>
+            <div class="contact-row">
+              <i class="fa-solid fa-phone"></i>
+              <p class="card-text">{contact.phone || 'No phone'}</p>
+            </div>
+            <div class="contact-row">
+              <i class="fa-solid fa-location-dot"></i>
+              <p class="card-text">{contact.address || 'No address'}</p>
+            </div>
           </div>
           <div class="action-btns">
             <DeleteModal 
@@ -103,16 +112,20 @@ const contacts : Contact[] = await response.json();
   }
   
   .body {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 8px;
+    width: 100%
+  }
+
+  .contact-row {
+    display: flex;
+    flex-direction: row;
+    margin: 5px auto;
+    gap: 8px;
   }
   
-  .card-text {
-    margin: 0;
-    line-height: 1.4;
-  }
+  
   
   .action-btns {
     display: flex;

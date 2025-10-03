@@ -41,6 +41,7 @@ const DeleteModal: React.FC<deleteContactProps> = ({ contactId, onDelete }) => {
       }
 
       toast.success("Houston, contact deleted successfully");
+      window.location.reload();
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error deleting contact:", error);
@@ -54,7 +55,12 @@ const DeleteModal: React.FC<deleteContactProps> = ({ contactId, onDelete }) => {
 
   return (
     <>
-      <Button color="danger" variant="outlined" onClick={showModal}>
+      <Button
+        color="danger"
+        variant="outlined"
+        onClick={showModal}
+        style={{ fontSize: "1.1rem", padding: "20px" }}
+      >
         <i className="fa-solid fa-trash"></i>
       </Button>
       <Modal

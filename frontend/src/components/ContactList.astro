@@ -5,9 +5,7 @@ import App from "./modals/CreateModal.tsx"
 
 
 const response = await fetch("http://localhost:3000/contact");
-const contacts = await response.json();
-
-
+const initialContacts = await response.json();
 ---
 
 <div class="container  mt-5">
@@ -16,14 +14,35 @@ const contacts = await response.json();
     <div class="contact-controls">
         <div class="search-wrapper">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="search" name="" id="" class="search-input" placeholder="Search by name, email or phone">
+            <input type="search" name="search-bar" id="searchBar" class="search-input" placeholder="Search by name, email or phone">
         </div>
         <App client:load />
     </div>
-    <CardContact {contacts} client:load/>
+    <div class="contact-container">
+        <CardContact {initialContacts} client:load/>
+    </div>
 </div>
 
 <script src="https://kit.fontawesome.com/509c179d58.js" crossorigin="anonymous"></script>
+
+
+<script>
+    // This runs on the client side where document is available
+    const searchBar = document.getElementById('searchBar');
+    searchBar?.addEventListener('input', async (e: Event) => {
+      const searchTerm = (e.target as HTMLInputElement).value;
+      if (searchTerm.length > 2) { // Only search when user types at least 3 characters
+        try {
+          const response = await fetch(`http://localhost:3000/search?q=${encodeURIComponent(searchTerm)}`);
+          const searchResult = await response.json();
+          // Handle search results here (you'll need to update your UI accordingly)
+          console.log(searchResult);
+        } catch (error) {
+          console.error('Search failed:', error);
+        }
+      }
+    });
+  </script>
 
 <style>
 
