@@ -2,9 +2,15 @@
 import "../styles/global.css"
 import CardContact from "./CardContact.astro"
 import App from "./modals/CreateModal.tsx"
+
+
+const response = await fetch("http://localhost:3000/contact");
+const contacts = await response.json();
+
+
 ---
 
-<div class="container">
+<div class="container  mt-5">
     <h1>Contact List</h1>
     <p>Example to use the template</p>
     <div class="contact-controls">
@@ -14,23 +20,27 @@ import App from "./modals/CreateModal.tsx"
         </div>
         <App client:load />
     </div>
-    <div class="card-container ">
-        <CardContact />
-    </div>
+    <CardContact {contacts} client:load/>
 </div>
+
 <script src="https://kit.fontawesome.com/509c179d58.js" crossorigin="anonymous"></script>
+
 <style>
+
+    :global(html), :global(body){
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
    
     .container{
        width: 80%;
-       left: 50%;
-       top: 30%;
-       transform: translate(-50%, -50%);
-       position: absolute;
+       margin: 10% auto;
        padding: 2rem;
        border: 1px solid #a1a0a0;
        border-radius: 10px;
        z-index: 1;
+       font-size: 1.5rem;
     }
     
     h1 {
@@ -71,12 +81,27 @@ import App from "./modals/CreateModal.tsx"
         outline: none;
     }
 
-    .card-container {
-        margin-top: 2%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
+   
+
+    :global(::-webkit-scrollbar) {
+        width: 8px;
     }
+    
+    :global(::-webkit-scrollbar-track) {
+        background: #f1f1f1;
+    }
+    
+    :global(::-webkit-scrollbar-thumb) {
+        background: #888;
+        border-radius: 4px;
+    }
+    
+    :global(::-webkit-scrollbar-thumb:hover) {
+        background: #555;
+    }
+
+
+
+
 
 </style>

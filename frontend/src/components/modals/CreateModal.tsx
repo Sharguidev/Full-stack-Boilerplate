@@ -76,7 +76,12 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Button color="cyan" variant="filled" onClick={showModal}>
+      <Button
+        color="cyan"
+        variant="filled"
+        onClick={showModal}
+        style={{ fontSize: "1.1rem" }}
+      >
         Add Contact
       </Button>
       <Modal
@@ -85,8 +90,19 @@ const App: React.FC = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        okButtonProps={{ style: { backgroundColor: "#344e41" } }}
+        okButtonProps={{
+          style: {
+            backgroundColor: "#344e41",
+            fontSize: "1.1rem",
+            padding: "10px",
+          },
+        }}
         okText="Save Contact"
+        cancelButtonProps={{
+          style: {
+            fontSize: "1.1rem",
+          },
+        }}
       >
         <Input
           placeholder="Name"
